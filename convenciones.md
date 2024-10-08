@@ -23,9 +23,6 @@
     * 
     * @warning Advertencias importantes sobre posibles efectos no deseados.
     */
-int suma(int param1, int param2) {
-    return param1 + param2;
-}
 
     
 - Utilizamos la convencion de los commits (feat, fix,...)

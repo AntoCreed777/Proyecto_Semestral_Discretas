@@ -1,5 +1,5 @@
 # Nombre del ejecutable
-TARGET = bin/main.out
+TARGET = main.out
 
 # Compilador
 CC = gcc
@@ -11,7 +11,7 @@ CFLAGS = -I ./include -g -Wall
 OBJ_DIR = build
 
 # Archivos fuente
-SOURCES = ./src/main.c ./src/entrada.c
+SOURCES = ./src/main.c ./src/entrada.c ./src/memoria.c
 
 # Archivos objeto (guardados en build/)
 OBJECTS = $(patsubst ./src/%.c, $(OBJ_DIR)/%.o, $(SOURCES))

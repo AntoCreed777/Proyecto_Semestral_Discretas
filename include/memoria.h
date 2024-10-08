@@ -1,0 +1,1 @@
+void liberacion_memoria_grafo(int **grafo);
