@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include "constantes.h"
 #include "pila.h"
 
 
@@ -16,7 +17,7 @@ bool push(struct Pila *pila, int elemento) {
     if (pila->tope >= pila->capacidad - 1) {    // Si la pila está llena
         pila->elementos = (int *)realloc(pila->elementos, sizeof(int) * (pila->capacidad + 1));
         if (pila->elementos == NULL) {
-            printf("Error al intentar aumentar la capacidad de la pila\n");
+            printf(ROJO "Error al intentar aumentar la capacidad de la pila\n" RESET_COLOR);
             return false;   // Error al intentar aumentar la capacidad de la pila
         }
         pila->capacidad++;

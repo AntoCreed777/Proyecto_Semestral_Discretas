@@ -5,13 +5,15 @@
 #include "dfs.h"
 #include "pila.h"
 
+#define ERROR 2
+
 // Retorna 1 si el grafo es conexo, 0 en caso contrario ; 2 si hay un error
 int dfs_coneccidad(int **grafo, int cantidad_nodos, int v, bool *visitados) {
     Pila pila;
     inicializarPila(&pila);
     if (!push(&pila, v)) {
         perror(ROJO "Error al insertar el elemento en la pila" RESET_COLOR);
-        return 2;
+        return ERROR;
     }
 
     while (!pilaVacia(&pila)) {
@@ -21,7 +23,7 @@ int dfs_coneccidad(int **grafo, int cantidad_nodos, int v, bool *visitados) {
             if (!visitados[grafo[u][i]]) {
                 if (!push(&pila, grafo[u][i])) {
                     perror(ROJO "Error al insertar el elemento en la pila" RESET_COLOR);
-                    return 2;
+                    return ERROR;
                 }
             }
         }
