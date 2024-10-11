@@ -11,7 +11,7 @@ CFLAGS = -I ./include -g -Wall
 OBJ_DIR = build
 
 # Archivos fuente
-SOURCES = ./src/main.c ./src/entrada.c ./src/memoria.c
+SOURCES = ./src/main.c ./src/entrada.c ./src/memoria.c ./src/pila.c ./src/dfs.c
 
 # Archivos objeto (guardados en build/)
 OBJECTS = $(patsubst ./src/%.c, $(OBJ_DIR)/%.o, $(SOURCES))

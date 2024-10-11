@@ -1,29 +1,29 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "constantes.h"
+#include "entrada.h"
 
 #define tamaño_ruta 256
 #define BUFFER_SIZE 1024
 
-int** entrada_grafo(){
+void entrada_grafo(int ***grafo, int *n_vertices) {
     char *ruta_grafo = "/mnt/c/Users/AntoCreed777/Documents/GitHub/Proyecto_Semestral_Discretas/grafo.txt";
     printf("Ruta del archivo: %s\n", ruta_grafo);
     
     FILE *file = fopen(ruta_grafo, "r");
     if (file == NULL) {
-        perror("Error al abrir el archivo");
+        perror(ROJO "Error al abrir el archivo" RESET_COLOR);
         exit(EXIT_FAILURE);
     }
 
-    int n_vertices;
-    fscanf(file, "%d", &n_vertices);
-    printf("\nNumero de vertices: %d\n", n_vertices);
+    fscanf(file, "%d", n_vertices);
+    printf(CIAN "\nNumero de vertices: %d\n" RESET_COLOR, *n_vertices);
 
     // Asignar memoria para la matriz de adyacencia
-    int **matriz_adyacencia = (int**)malloc(sizeof(int*) * (n_vertices+1));
-    matriz_adyacencia[n_vertices] = NULL;   // Marcar el final de la matriz
-    for (int i = 0; i < n_vertices; i++) {
-        matriz_adyacencia[i] = (int*)malloc(sizeof(int) * (n_vertices+1));
+    *grafo = (int**)malloc(sizeof(int*) * (*n_vertices));
+    for (int i = 0; i < *n_vertices; i++) {
+        (*grafo)[i] = (int*)malloc(sizeof(int) * (*n_vertices+1));
     }
 
     char buffer[BUFFER_SIZE];
@@ -34,16 +34,15 @@ int** entrada_grafo(){
         int j = 0;
         while (numero != NULL && i != -1) {
             // Omitir la primera columna que contiene el vertice al que la fila corresponde
-            if (j > 0) matriz_adyacencia[i][j - 1] = atoi(numero);  // Se omite la primera columna
+            if (j > 0) (*grafo)[i][j - 1] = atoi(numero) - 1;  // Se omite la primera columna  // Se resta 1 para que los vertices comiencen en 0
 
             numero = strtok(NULL, ",: ");
             j++;
         }
 
-        if(i != -1) matriz_adyacencia[i][j - 1] = -1; // Marcar el final de la fila
+        if(i != -1) (*grafo)[i][j - 1] = -1; // Marcar el final de la fila
         i++;
     }
 
     fclose(file);
-    return matriz_adyacencia;
 }
