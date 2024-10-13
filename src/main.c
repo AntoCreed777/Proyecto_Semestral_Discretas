@@ -12,24 +12,17 @@ int main(){
     entrada_grafo(&grafo, &n_vertices); // Se obtiene la lista de adyacencia (hay que liberar memoria)
 
     // Se imprime la lista de adyacencia
+    /*
     for(int i = 0; i < n_vertices; i++){
         for(int j = 0; grafo[i][j] != -1; j++){
             printf(AMARILLO "%d " RESET_COLOR,grafo[i][j]);
         }
         printf("\n");
     }
+    */
 
-    // Lista de vertices ignorados que representa los vertices que se eliminan del grafo (pero sin modificar la lista de adyacencia)
-    bool *ignorados = (bool*)malloc(sizeof(bool) * n_vertices);
-    for(int i = 0; i < n_vertices; i++) ignorados[i] = false;
-
-    //  ZONA PARA IGNORAR VERTICES
-
-    ignorados[0] = true;
-    ignorados[1] = true;
-    ignorados[2] = true;
-
-    //  FIN DE ZONA PARA IGNORAR VERTICES
+    // Lista con los vertices que se ignoraran
+    int ignorados[] = {0, 4, 2, -1}; // Se indica el fin de la lista con -1
 
     // Se verifica si el grafo es conexo
     int conexo = dfs_coneccidad(grafo, n_vertices, ignorados);
@@ -39,6 +32,5 @@ int main(){
 
 
     liberacion_memoria_grafo(grafo, n_vertices); // Se libera la memoria de la lista de adyacencia
-    free(ignorados); // Se libera la memoria de la lista de vertices ignorados
     return 0;
 }
