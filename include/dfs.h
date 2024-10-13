@@ -2,4 +2,4 @@
 
 typedef struct Pila Pila;
 
-int dfs_coneccidad(int **grafo, int n, int v);
+int dfs_coneccidad(int **grafo, int n, bool *ignorados);
