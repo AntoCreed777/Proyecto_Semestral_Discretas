@@ -24,14 +24,18 @@ int dfs_coneccidad(int **grafo, int cantidad_nodos, int *ignorados) {
 
     // Se busca un vertice inicial que no haya sido ignorado
     int v = 0;
-    while (visitados[v] && v < cantidad_nodos) v++;
+    while (v < cantidad_nodos && visitados[v]) v++;
     if (v == cantidad_nodos) {
         printf(ROJO "No se encontro un vertice inicial" RESET_COLOR);
+        free(visitados);
+        liberarPila(&pila);
         return ERROR;
     }
 
     if (!push(&pila, v)) {
         perror(ROJO "Error al insertar el elemento en la pila" RESET_COLOR);
+        free(visitados);
+        liberarPila(&pila);
         return ERROR;
     }
 
@@ -42,6 +46,8 @@ int dfs_coneccidad(int **grafo, int cantidad_nodos, int *ignorados) {
             if (!visitados[grafo[u][i]]) {
                 if (!push(&pila, grafo[u][i])) {
                     perror(ROJO "Error al insertar el elemento en la pila" RESET_COLOR);
+                    free(visitados);
+                    liberarPila(&pila);
                     return ERROR;
                 }
             }
