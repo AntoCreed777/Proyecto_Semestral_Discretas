@@ -9,6 +9,12 @@
 #define ERROR 2
 #define INF 1e9
 
+/**
+ * @brief Imprime la lista de adyacencia del grafo
+ * 
+ * @param grafo Lista de adyacencia del grafo
+ * @param n_vertices Numero de vertices del grafo
+ */
 void impresion_grafo(int **grafo, int n_vertices){
     for(int i = 0; i < n_vertices; i++){
         for(int j = 0; grafo[i][j] != -1; j++){
@@ -18,25 +24,35 @@ void impresion_grafo(int **grafo, int n_vertices){
     }
 }
 
+
+/**
+ * @brief Verifica si el grafo es conexo
+ * 
+ * @param conexo Variable que indica si el grafo es conexo
+ */
 void impresion_resultado_dfs(int conexo){
     if(conexo == true) printf(VERDE "El grafo es conexo\n" RESET_COLOR);
     else if(conexo == false) printf(MAGENTA "El grafo no es conexo\n" RESET_COLOR);
     else printf(ROJO "Error al verificar la conexidad del grafo\n" RESET_COLOR);
 }
 
+/**
+ * @brief Verifica si el grafo es k-conexo
+ * 
+ * @param k_conexo Variable que indica la k-conexidad del grafo
+ */
 void impresion_resultado_dfs_k_conexo(int k_conexo){
     if(k_conexo == true) printf(AMARILLO "El grafo es %d-conexo\n" RESET_COLOR, k_conexo);
     else if(k_conexo == false) printf(MAGENTA "El grafo no es k-conexo\n" RESET_COLOR);
     else printf(ROJO "Error al verificar la k-conexidad del grafo\n" RESET_COLOR);
 }
 
-void deteccion_conexidad_base(int **grafo, int n_vertices){
-    // Se verifica la conexidad del grafo sin eliminar vertices
-    int ignorados[] = {-1}; // Se indica el fin de la lista con -1
-    impresion_resultado_dfs(dfs_coneccidad(grafo,n_vertices,ignorados));
-    printf("\n\n");
-}
-
+/**
+ * @brief Verifica la conexidad del grafo ignorando conjuntos de vertices
+ * 
+ * @param grafo Lista de adyacencia del grafo
+ * @param n_vertices Numero de vertices del grafo
+ */
 void rastreo_de_coneccidad_4_salida_completa(int **grafo, int n_vertices){
     // Se verifica la conexidad del grafo sin eliminar vertices
     int ignorados[] = {-1}; // Se indica el fin de la lista con -1
@@ -98,6 +114,13 @@ void rastreo_de_coneccidad_4_salida_completa(int **grafo, int n_vertices){
     }
 }
 
+/**
+ * @brief Verifica la k-conexidad del grafo
+ * 
+ * @param grafo Lista de adyacencia del grafo
+ * @param n_vertices Numero de vertices del grafo
+ * @return int 1 si es 1-conexo, 2 si es 2-conexo, 3 si es 3-conexo, 4 si es 4-conexo, 5 si es k-conexo >= 5, -1 si hay un error
+ */
 int rastreo_de_k_coneccidad_hasta_4(int **grafo, int n_vertices){
     // Se verifica la conexidad del grafo ignorando un vertice
     for (int i = 0; i < n_vertices; i++){
@@ -158,6 +181,12 @@ int rastreo_de_k_coneccidad_hasta_4(int **grafo, int n_vertices){
     return 5;   //Para indicar que es k_conexo >= 5
 }
 
+/**
+ * @brief Encuentra el grado maximo y minimo del grafo
+ * 
+ * @param grafo Lista de adyacencia del grafo
+ * @param n_vertices Numero de vertices del grafo
+ */
 void busqueda_grados(int **grafo, int n_vertices){
     int grados[2] = {0,INF};  //[0] grado maximo, [1] grado minimo
     for(int i=0;i<n_vertices;i++){
