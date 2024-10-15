@@ -218,9 +218,11 @@ void eleccion_opciones(int **grafo, int n_vertices){
     printf(MAGENTA "1. Verificar conexidad del grafo\n" RESET_COLOR);
     printf(MAGENTA "2. Verificar k-conexidad del grafo\n" RESET_COLOR);
     printf(MAGENTA "3. Verificar grados maximos y minimos del grafo\n" RESET_COLOR);
-    printf(MAGENTA "4. Salir\n" RESET_COLOR);
+    printf(MAGENTA "4. Ingresar nuevo grafo\n" RESET_COLOR);
+    printf(MAGENTA "5. Salir\n" RESET_COLOR);
     printf(AMARILLO "Ingrese la opcion deseada: " RESET_COLOR);
     scanf("%d", &opcion);
+    printf("\n\n");
 
     switch(opcion){
         case 1:
@@ -233,6 +235,10 @@ void eleccion_opciones(int **grafo, int n_vertices){
             busqueda_grados(grafo, n_vertices);
             break;
         case 4:
+            liberacion_memoria_grafo(grafo, n_vertices); // Se libera la memoria de la lista de adyacencia
+            entrada_grafo(&grafo, &n_vertices); // Se obtiene la lista de adyacencia (hay que liberar memoria)
+            break;
+        case 5:
             liberacion_memoria_grafo(grafo, n_vertices); // Se libera la memoria de la lista de adyacencia
             exit(EXIT_SUCCESS);
         default:

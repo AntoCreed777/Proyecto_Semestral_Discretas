@@ -8,8 +8,9 @@
 #define BUFFER_SIZE 1024
 
 void entrada_grafo(int ***grafo, int *n_vertices) {
-    char *ruta_grafo = "/mnt/c/Users/AntoCreed777/Documents/GitHub/Proyecto_Semestral_Discretas/grafo.txt";
-    printf("Ruta del archivo: %s\n", ruta_grafo);
+    char ruta_grafo[tamaño_ruta];
+    printf(AMARILLO "Ingrese la ruta del archivo que contiene el grafo: " RESET_COLOR);
+    scanf("%s", ruta_grafo);
     
     FILE *file = fopen(ruta_grafo, "r");
     if (file == NULL) {
@@ -18,7 +19,7 @@ void entrada_grafo(int ***grafo, int *n_vertices) {
     }
 
     fscanf(file, "%d", n_vertices);
-    printf(CIAN "\nNumero de vertices: %d\n" RESET_COLOR, *n_vertices);
+    printf(CIAN "\nNumero de vertices: %d\n\n" RESET_COLOR, *n_vertices);
 
     // Asignar memoria para la matriz de adyacencia
     *grafo = (int**)malloc(sizeof(int*) * (*n_vertices));
