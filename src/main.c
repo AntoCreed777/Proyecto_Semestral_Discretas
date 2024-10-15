@@ -42,9 +42,11 @@ void impresion_resultado_dfs(int conexo){
  * @param k_conexo Variable que indica la k-conexidad del grafo
  */
 void impresion_resultado_dfs_k_conexo(int k_conexo){
-    if(k_conexo == true) printf(AMARILLO "El grafo es %d-conexo\n" RESET_COLOR, k_conexo);
-    else if(k_conexo == false) printf(MAGENTA "El grafo no es k-conexo\n" RESET_COLOR);
+    if(k_conexo == true) printf(VERDE "El grafo es %d-conexo\n" RESET_COLOR, k_conexo);
+    else if(k_conexo == false) printf(CIAN "El grafo no es k-conexo\n" RESET_COLOR);
     else printf(ROJO "Error al verificar la k-conexidad del grafo\n" RESET_COLOR);
+
+    printf("\n\n");
 }
 
 /**
@@ -112,6 +114,8 @@ void rastreo_de_coneccidad_4_salida_completa(int **grafo, int n_vertices){
             }
         }
     }
+
+    printf("\n\n");
 }
 
 /**
@@ -196,8 +200,10 @@ void busqueda_grados(int **grafo, int n_vertices){
         if(grado < grados[1]) grados[1] = grado;
     }
     
-    printf(AMARILLO "Grado maximo: %d\n" RESET_COLOR, grados[0]);
-    printf(AMARILLO "Grado minimo: %d\n" RESET_COLOR, grados[1]);
+    printf(VERDE "Grado maximo: " BLANCO "%d\n" RESET_COLOR, grados[0]);
+    printf(VERDE "Grado minimo: " BLANCO "%d\n" RESET_COLOR, grados[1]);
+
+    printf("\n\n");
 }
 
 
@@ -227,7 +233,8 @@ void eleccion_opciones(int **grafo, int n_vertices){
             busqueda_grados(grafo, n_vertices);
             break;
         case 4:
-            break;
+            liberacion_memoria_grafo(grafo, n_vertices); // Se libera la memoria de la lista de adyacencia
+            exit(EXIT_SUCCESS);
         default:
             printf(ROJO "Opcion invalida\n" RESET_COLOR);
             break;
@@ -243,8 +250,8 @@ int main(){
 
     //impresion_grafo(grafo, n_vertices); // Se imprime la lista de adyacencia
 
-    eleccion_opciones(grafo, n_vertices);
+    while(true) 
+        eleccion_opciones(grafo, n_vertices);
 
-    liberacion_memoria_grafo(grafo, n_vertices); // Se libera la memoria de la lista de adyacencia
     return 0;
 }
