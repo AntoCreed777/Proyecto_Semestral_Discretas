@@ -7,6 +7,7 @@
 #include "dfs.h"
 
 #define ERROR 2
+#define INF 1e9
 
 void impresion_grafo(int **grafo, int n_vertices){
     for(int i = 0; i < n_vertices; i++){
@@ -152,6 +153,19 @@ int rastreo_de_k_coneccidad_hasta_4(int **grafo, int n_vertices){
     return 5;   //Para indicar que es k_conexo >= 5
 }
 
+void busqueda_grados(int **grafo, int n_vertices){
+    int grados[2] = {0,INF};  //[0] grado maximo, [1] grado minimo
+    for(int i=0;i<n_vertices;i++){
+        int grado = 0;
+        for(; grafo[i][grado] != -1; grado++);
+        if(grado > grados[0]) grados[0] = grado;
+        if(grado < grados[1]) grados[1] = grado;
+    }
+    
+    printf(AMARILLO "Grado maximo: %d\n" RESET_COLOR, grados[0]);
+    printf(AMARILLO "Grado minimo: %d\n" RESET_COLOR, grados[1]);
+}
+
 
 int main(){
     int **grafo = NULL; // Lista de adyacencia indexado a 0
@@ -164,6 +178,10 @@ int main(){
     // Se eliminan conjuntos de vertices desde 0 hasta 4 y se imprimen las distintas combinaciones y si es o no conexo
     //rastreo_de_coneccidad_4_salida_completa(grafo,n_vertices);
 
+    // Se calculan los grados maximos y minimos del grafo
+    busqueda_grados(grafo, n_vertices);
+
+    // Se verifica la k-conexidad del grafo
     int k_conexidad = rastreo_de_k_coneccidad_hasta_4(grafo, n_vertices);
     if (k_conexidad == -1) printf(ROJO "Error al verificar la conexidad del grafo\n" RESET_COLOR);
     else if (k_conexidad < 5) printf(AMARILLO "EL grafo es %d-conexo\n" RESET_COLOR, k_conexidad);
