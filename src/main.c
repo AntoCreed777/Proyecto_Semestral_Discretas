@@ -24,6 +24,19 @@ void impresion_resultado_dfs(int conexo){
     else printf(ROJO "Error al verificar la conexidad del grafo\n" RESET_COLOR);
 }
 
+void impresion_resultado_dfs_k_conexo(int k_conexo){
+    if(k_conexo == true) printf(AMARILLO "El grafo es %d-conexo\n" RESET_COLOR, k_conexo);
+    else if(k_conexo == false) printf(MAGENTA "El grafo no es k-conexo\n" RESET_COLOR);
+    else printf(ROJO "Error al verificar la k-conexidad del grafo\n" RESET_COLOR);
+}
+
+void deteccion_conexidad_base(int **grafo, int n_vertices){
+    // Se verifica la conexidad del grafo sin eliminar vertices
+    int ignorados[] = {-1}; // Se indica el fin de la lista con -1
+    impresion_resultado_dfs(dfs_coneccidad(grafo,n_vertices,ignorados));
+    printf("\n\n");
+}
+
 void rastreo_de_coneccidad_4_salida_completa(int **grafo, int n_vertices){
     // Se verifica la conexidad del grafo sin eliminar vertices
     int ignorados[] = {-1}; // Se indica el fin de la lista con -1
@@ -86,14 +99,6 @@ void rastreo_de_coneccidad_4_salida_completa(int **grafo, int n_vertices){
 }
 
 int rastreo_de_k_coneccidad_hasta_4(int **grafo, int n_vertices){
-    // Se verifica la conexidad del grafo sin eliminar vertices
-    int ignorados[] = {-1}; // Se indica el fin de la lista con -1
-    int conexo = dfs_coneccidad(grafo, n_vertices, ignorados);
-    if(conexo == false) return 0;
-    else if(conexo == ERROR) return -1;
-
-    printf("\n\n");
-
     // Se verifica la conexidad del grafo ignorando un vertice
     for (int i = 0; i < n_vertices; i++){
         int ignorados[] = {i, -1}; // Se indica el fin de la lista con -1
@@ -175,17 +180,17 @@ int main(){
     // Se imprime la lista de adyacencia
     //impresion_grafo(grafo, n_vertices);
 
-    // Se eliminan conjuntos de vertices desde 0 hasta 4 y se imprimen las distintas combinaciones y si es o no conexo
+    // Se verifica que el grafo original se conexo
+    //deteccion_conexidad_base(grafo, n_vertices);
+
+    // Se eliminan conjuntos de vertices desde 1 hasta 4 y se imprimen las distintas combinaciones y si es o no conexo
     //rastreo_de_coneccidad_4_salida_completa(grafo,n_vertices);
 
     // Se calculan los grados maximos y minimos del grafo
-    busqueda_grados(grafo, n_vertices);
+    //busqueda_grados(grafo, n_vertices);
 
     // Se verifica la k-conexidad del grafo
-    int k_conexidad = rastreo_de_k_coneccidad_hasta_4(grafo, n_vertices);
-    if (k_conexidad == -1) printf(ROJO "Error al verificar la conexidad del grafo\n" RESET_COLOR);
-    else if (k_conexidad < 5) printf(AMARILLO "EL grafo es %d-conexo\n" RESET_COLOR, k_conexidad);
-    else printf(AMARILLO "El grafo es k-conexo mayor a 5\n" RESET_COLOR);
+    impresion_resultado_dfs_k_conexo(rastreo_de_k_coneccidad_hasta_4(grafo, n_vertices));
 
     liberacion_memoria_grafo(grafo, n_vertices); // Se libera la memoria de la lista de adyacencia
     return 0;
