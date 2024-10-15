@@ -201,25 +201,49 @@ void busqueda_grados(int **grafo, int n_vertices){
 }
 
 
+/**
+ * @brief Menu de opciones para el usuario
+ * 
+ * @param grafo Lista de adyacencia del grafo
+ * @param n_vertices Numero de vertices del grafo
+ */
+void eleccion_opciones(int **grafo, int n_vertices){
+    int opcion;
+    printf(MAGENTA "1. Verificar conexidad del grafo\n" RESET_COLOR);
+    printf(MAGENTA "2. Verificar k-conexidad del grafo\n" RESET_COLOR);
+    printf(MAGENTA "3. Verificar grados maximos y minimos del grafo\n" RESET_COLOR);
+    printf(MAGENTA "4. Salir\n" RESET_COLOR);
+    printf(AMARILLO "Ingrese la opcion deseada: " RESET_COLOR);
+    scanf("%d", &opcion);
+
+    switch(opcion){
+        case 1:
+            rastreo_de_coneccidad_4_salida_completa(grafo, n_vertices);
+            break;
+        case 2:
+            impresion_resultado_dfs_k_conexo(rastreo_de_k_coneccidad_hasta_4(grafo, n_vertices));
+            break;
+        case 3:
+            busqueda_grados(grafo, n_vertices);
+            break;
+        case 4:
+            break;
+        default:
+            printf(ROJO "Opcion invalida\n" RESET_COLOR);
+            break;
+    }
+
+}
+
+
 int main(){
     int **grafo = NULL; // Lista de adyacencia indexado a 0
     int n_vertices;
     entrada_grafo(&grafo, &n_vertices); // Se obtiene la lista de adyacencia (hay que liberar memoria)
 
-    // Se imprime la lista de adyacencia
-    //impresion_grafo(grafo, n_vertices);
+    //impresion_grafo(grafo, n_vertices); // Se imprime la lista de adyacencia
 
-    // Se verifica que el grafo original se conexo
-    //deteccion_conexidad_base(grafo, n_vertices);
-
-    // Se eliminan conjuntos de vertices desde 1 hasta 4 y se imprimen las distintas combinaciones y si es o no conexo
-    //rastreo_de_coneccidad_4_salida_completa(grafo,n_vertices);
-
-    // Se calculan los grados maximos y minimos del grafo
-    //busqueda_grados(grafo, n_vertices);
-
-    // Se verifica la k-conexidad del grafo
-    impresion_resultado_dfs_k_conexo(rastreo_de_k_coneccidad_hasta_4(grafo, n_vertices));
+    eleccion_opciones(grafo, n_vertices);
 
     liberacion_memoria_grafo(grafo, n_vertices); // Se libera la memoria de la lista de adyacencia
     return 0;
