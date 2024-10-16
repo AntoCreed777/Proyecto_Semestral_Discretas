@@ -7,6 +7,13 @@
 #define tamaño_ruta 256
 #define BUFFER_SIZE 1024
 
+
+/**
+ * @brief Obtiene la lista de adyacencia de un grafo
+ * 
+ * @param grafo Lista de adyacencia del grafo (Se modifica por referencia)
+ * @param n_vertices Numero de vertices del grafo (Se modifica por referencia)
+ */
 void entrada_grafo(int ***grafo, int *n_vertices) {
     char ruta_grafo[tamaño_ruta];
     printf(AMARILLO "Ingrese la ruta del archivo que contiene el grafo: " RESET_COLOR);

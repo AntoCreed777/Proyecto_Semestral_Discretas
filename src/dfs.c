@@ -7,7 +7,16 @@
 
 #define ERROR 2
 
-// Retorna 1 si el grafo es conexo, 0 en caso contrario ; 2 si hay un error
+
+/**
+ * @brief Verifica la conexidad del grafo ignorando conjuntos de vertices
+ * 
+ * @param grafo Lista de adyacencia del grafo
+ * @param cantidad_nodos Numero de vertices del grafo
+ * @param ignorados Lista de vertices a ignorar
+ * 
+ * @return int 1 si es conexo, 0 si no es conexo, 2 si hay un error
+ */
 int dfs_coneccidad(int **grafo, int cantidad_nodos, int *ignorados) {
     // Se crea un arreglo de booleanos para marcar los vertices visitados
     bool *visitados = (bool*)malloc(sizeof(bool) * cantidad_nodos);
