@@ -226,7 +226,12 @@ void eleccion_opciones(int **grafo, int n_vertices){
 
     switch(opcion){
         case 1:
-            rastreo_de_coneccidad_4_salida_completa(grafo, n_vertices);
+            // Se verifica la conexidad del grafo sin eliminar vertices
+            int ignorados[] = {-1}; // Se indica el fin de la lista con -1
+            printf(BLANCO "NO SE IGNORAN VERTICES " AMARILLO "\"GRAFO ORIGINAL\"" BLANCO " :\t" RESET_COLOR);
+            impresion_resultado_dfs(dfs_coneccidad(grafo, n_vertices, ignorados));
+
+            printf("\n\n");
             break;
         case 2:
             impresion_resultado_dfs_k_conexo(rastreo_de_k_coneccidad_hasta_4(grafo, n_vertices));
