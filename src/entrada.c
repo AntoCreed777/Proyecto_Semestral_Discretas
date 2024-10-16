@@ -15,7 +15,7 @@ void entrada_grafo(int ***grafo, int *n_vertices) {
     FILE *file = fopen(ruta_grafo, "r");
     if (file == NULL) {
         perror(ROJO "Error al abrir el archivo" RESET_COLOR);
-        exit(EXIT_FAILURE);
+        exit(EXIT_SUCCESS);
     }
 
     fscanf(file, "%d", n_vertices);
