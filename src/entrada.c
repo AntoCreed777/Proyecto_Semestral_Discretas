@@ -7,6 +7,24 @@
 #define tamaño_ruta 256
 #define BUFFER_SIZE 1024
 
+FILE *recibir_archivo() {
+    char ruta[tamaño_ruta];
+    printf(AMARILLO "Ingrese la ruta del archivo (\"exit\" para salir del programa): " RESET_COLOR);
+    scanf("%s", ruta);
+
+    do{
+        if (strcmp(ruta, "exit") == 0) exit(EXIT_SUCCESS);
+
+        FILE *file = fopen(ruta, "r");
+        if (file == NULL) {
+            perror(ROJO "Error al abrir el archivo" RESET_COLOR);
+            printf(AMARILLO "\nIngrese la ruta del archivo (\"exit\" para salir del programa): " RESET_COLOR);
+            scanf("%s", ruta);
+        }
+        else return file;
+    } while (1);
+}
+
 
 /**
  * @brief Obtiene la lista de adyacencia de un grafo
@@ -15,15 +33,7 @@
  * @param n_vertices Numero de vertices del grafo (Se modifica por referencia)
  */
 void entrada_grafo(int ***grafo, int *n_vertices) {
-    char ruta_grafo[tamaño_ruta];
-    printf(AMARILLO "Ingrese la ruta del archivo que contiene el grafo: " RESET_COLOR);
-    scanf("%s", ruta_grafo);
-    
-    FILE *file = fopen(ruta_grafo, "r");
-    if (file == NULL) {
-        perror(ROJO "Error al abrir el archivo" RESET_COLOR);
-        exit(EXIT_SUCCESS);
-    }
+    FILE *file = recibir_archivo();
 
     fscanf(file, "%d", n_vertices);
     printf(CIAN "\nNumero de vertices: %d\n\n" RESET_COLOR, *n_vertices);
