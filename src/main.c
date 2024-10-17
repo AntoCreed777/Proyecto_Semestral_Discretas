@@ -214,14 +214,17 @@ void busqueda_grados(int **grafo, int n_vertices){
  * @param n_vertices Numero de vertices del grafo
  */
 void eleccion_opciones(int **grafo, int n_vertices){
-    int opcion;
     printf(MAGENTA "1. Verificar conexidad del grafo\n" RESET_COLOR);
     printf(MAGENTA "2. Verificar k-conexidad del grafo\n" RESET_COLOR);
     printf(MAGENTA "3. Verificar grados maximos y minimos del grafo\n" RESET_COLOR);
     printf(MAGENTA "4. Ingresar nuevo grafo\n" RESET_COLOR);
     printf(MAGENTA "5. Salir\n" RESET_COLOR);
     printf(AMARILLO "Ingrese la opcion deseada: " RESET_COLOR);
-    scanf("%d", &opcion);
+
+    char opcion_str[10];
+    scanf("%9s", opcion_str);
+    int opcion = atoi(opcion_str);
+
     printf("\n\n");
 
     switch(opcion){
