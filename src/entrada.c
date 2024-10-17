@@ -7,6 +7,13 @@
 #define tamaño_ruta 256
 #define BUFFER_SIZE 1024
 
+
+/**
+ * @brief Recibe la ruta de un archivo y lo abre
+ * 
+ * @return FILE* Archivo abierto
+ * @note Sale del programa si el usuario ingresa "exit"
+ */
 FILE *recibir_archivo() {
     char ruta[tamaño_ruta];
     printf(AMARILLO "Ingrese la ruta del archivo (\"exit\" para salir del programa): " RESET_COLOR);
