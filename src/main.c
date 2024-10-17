@@ -134,8 +134,6 @@ int rastreo_de_k_coneccidad_hasta_4(int **grafo, int n_vertices){
         else if(conexo == ERROR) return -1;
     }
 
-    printf("\n\n");
-
     // Se verifica la conexidad del grafo ignorando dos vertices
     for (int i = 0; i < n_vertices; i++) {
         for (int j = 0; j < n_vertices; j++) {
@@ -147,8 +145,6 @@ int rastreo_de_k_coneccidad_hasta_4(int **grafo, int n_vertices){
             }
         }
     }
-
-    printf("\n\n");
 
     // Se verifica la conexidad del grafo ignorando tres vertices
     for (int i = 0; i < n_vertices; i++) {
@@ -163,8 +159,6 @@ int rastreo_de_k_coneccidad_hasta_4(int **grafo, int n_vertices){
             }
         }
     }
-
-    printf("\n\n");
 
     // Se verifica la conexidad del grafo ignorando cuatro vertices
     for (int i = 0; i < n_vertices; i++) {
