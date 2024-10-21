@@ -1,4 +1,4 @@
-# Proyecto shell custom
+# Proyecto K-Conexidad MATEMATICAS DISCRETAS
 
 
 <p align="center">
