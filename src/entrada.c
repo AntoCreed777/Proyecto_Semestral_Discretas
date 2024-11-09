@@ -52,21 +52,20 @@ void entrada_grafo(int ***grafo, int *n_vertices) {
     }
 
     char buffer[BUFFER_SIZE];
-    int i = -1; // Comienza en -1 para omitir la primera fila
-
+    int vertice = 0;
+    
+    fgets(buffer, sizeof(buffer), file);  // Ignorar la primera linea
     while (fgets(buffer, sizeof(buffer), file) != NULL) {
         char *numero = strtok(buffer, ",: ");
         int j = 0;
-        while (numero != NULL && i != -1) {
-            // Omitir la primera columna que contiene el vertice al que la fila corresponde
-            if (j > 0) (*grafo)[i][j - 1] = atoi(numero) - 1;  // Se omite la primera columna  // Se resta 1 para que los vertices comiencen en 0
+        while (numero != NULL) {
+            if (j == 0) vertice = atoi(numero) - 1;  // Se resta 1 para que los vertices comiencen en 0
+            else (*grafo)[vertice][j - 1] = atoi(numero) - 1;  // Se resta 1 para que los vertices comiencen en 0
 
             numero = strtok(NULL, ",: ");
             j++;
         }
-
-        if(i != -1) (*grafo)[i][j - 1] = -1; // Marcar el final de la fila
-        i++;
+        (*grafo)[vertice][j - 1] = -1; // Marcar el final de la fila
     }
 
     fclose(file);
