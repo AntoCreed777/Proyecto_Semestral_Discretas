@@ -23,10 +23,12 @@ all: $(TARGET)
 
 # Regla para compilar el programa
 $(TARGET): $(OBJECTS)
+	@echo "Compilando el programa..."
 	@$(CC) $(OBJECTS) -o $(TARGET) $(CFLAGS)
 
 # Regla para compilar los archivos objeto y guardarlos en obj/
 $(OBJ_DIR)/%.o: ./src/%.c | $(OBJ_DIR)
+	@echo "Compilando $<..."
 	@$(CC) -c $< -o $@ $(CFLAGS)
 
 # Crear el directorio obj si no existe
@@ -35,6 +37,7 @@ $(OBJ_DIR):
 
 # Regla para ejecutar el programa
 run: $(TARGET)
+	@echo "Ejecutando el programa...\n"
 	@./$(TARGET)
 
 # Regla para debuggear el programa

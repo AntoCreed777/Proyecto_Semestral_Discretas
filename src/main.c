@@ -17,11 +17,13 @@
  */
 void impresion_grafo(int **grafo, int n_vertices){
     for(int i = 0; i < n_vertices; i++){
+        printf(BLANCO "Vertice " VERDE "%d" BLANCO " : " RESET_COLOR, i + 1);
         for(int j = 0; grafo[i][j] != -1; j++){
-            printf(AMARILLO "%d " RESET_COLOR,grafo[i][j]);
+            printf(AMARILLO "%d " RESET_COLOR,grafo[i][j] + 1);
         }
         printf("\n");
     }
+    printf("\n\n");
 }
 
 
@@ -211,8 +213,9 @@ void eleccion_opciones(int **grafo, int n_vertices){
     printf(MAGENTA "1. Verificar conexidad del grafo\n" RESET_COLOR);
     printf(MAGENTA "2. Verificar k-conexidad del grafo\n" RESET_COLOR);
     printf(MAGENTA "3. Verificar grados maximos y minimos del grafo\n" RESET_COLOR);
-    printf(MAGENTA "4. Ingresar nuevo grafo\n" RESET_COLOR);
-    printf(MAGENTA "5. Salir\n" RESET_COLOR);
+    printf(MAGENTA "4. Mostrar grafo\n" RESET_COLOR);
+    printf(MAGENTA "5. Ingresar nuevo grafo\n" RESET_COLOR);
+    printf(MAGENTA "6. Salir\n" RESET_COLOR);
     printf(AMARILLO "Ingrese la opcion deseada: " RESET_COLOR);
 
     char opcion_str[10];
@@ -237,10 +240,13 @@ void eleccion_opciones(int **grafo, int n_vertices){
             busqueda_grados(grafo, n_vertices);
             break;
         case 4:
+            impresion_grafo(grafo, n_vertices); // Se imprime la lista de adyacencia
+            break;
+        case 5:
             liberacion_memoria_grafo(grafo, n_vertices); // Se libera la memoria de la lista de adyacencia
             entrada_grafo(&grafo, &n_vertices); // Se obtiene la lista de adyacencia (hay que liberar memoria)
             break;
-        case 5:
+        case 6:
             liberacion_memoria_grafo(grafo, n_vertices); // Se libera la memoria de la lista de adyacencia
             exit(EXIT_SUCCESS);
         default:
@@ -255,8 +261,6 @@ int main(){
     int **grafo = NULL; // Lista de adyacencia indexado a 0
     int n_vertices;
     entrada_grafo(&grafo, &n_vertices); // Se obtiene la lista de adyacencia (hay que liberar memoria)
-
-    //impresion_grafo(grafo, n_vertices); // Se imprime la lista de adyacencia
 
     while(true) 
         eleccion_opciones(grafo, n_vertices);
