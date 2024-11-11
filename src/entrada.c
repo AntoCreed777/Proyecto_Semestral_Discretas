@@ -52,7 +52,7 @@ void entrada_grafo(int ***grafo, int *n_vertices) {
     }
 
     char buffer[BUFFER_SIZE];
-    int vertice = 0;
+    int vertice = -1;   // Vertice actual // -1 indica que no se ha leido un vertice
     
     fgets(buffer, sizeof(buffer), file);  // Ignorar la primera linea
     while (fgets(buffer, sizeof(buffer), file) != NULL) {
@@ -61,11 +61,13 @@ void entrada_grafo(int ***grafo, int *n_vertices) {
         while (numero != NULL) {
             if (j == 0) vertice = atoi(numero) - 1;  // Se resta 1 para que los vertices comiencen en 0
             else (*grafo)[vertice][j - 1] = atoi(numero) - 1;  // Se resta 1 para que los vertices comiencen en 0
-
+            
             numero = strtok(NULL, ",: ");
             j++;
         }
-        (*grafo)[vertice][j - 1] = -1; // Marcar el final de la fila
+
+        if (vertice != -1) (*grafo)[vertice][j - 1] = -1; // Marcar el final de la fila
+        vertice = -1;   // Reiniciar el vertice
     }
 
     fclose(file);
