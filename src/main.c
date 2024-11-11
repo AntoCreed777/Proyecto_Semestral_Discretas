@@ -45,7 +45,7 @@ void impresion_resultado_dfs(int conexo){
  */
 void impresion_resultado_dfs_k_conexo(int k_conexo){
     if(k_conexo == true) printf(VERDE "El grafo es %d-conexo\n" RESET_COLOR, k_conexo);
-    else if(k_conexo == false) printf(CIAN "El grafo no es k-conexo\n" RESET_COLOR);
+    else if(k_conexo == false) printf(CIAN "El grafo es 0-conexo (El grafo original es disconexo)\n" RESET_COLOR);
     else printf(ROJO "Error al verificar la k-conexidad del grafo\n" RESET_COLOR);
 
     printf("\n\n");
@@ -125,9 +125,23 @@ void rastreo_de_coneccidad_4_salida_completa(int **grafo, int n_vertices){
  * 
  * @param grafo Lista de adyacencia del grafo
  * @param n_vertices Numero de vertices del grafo
- * @return int 1 si es 1-conexo, 2 si es 2-conexo, 3 si es 3-conexo, 4 si es 4-conexo, 5 si es k-conexo >= 5, -1 si hay un error
+ * 
+ * @return int - Devuelve:
+ *         0 si el grafo es 0-conexo,
+ *         1 si el grafo es 1-conexo,
+ *         2 si el grafo es 2-conexo,
+ *         3 si el grafo es 3-conexo,
+ *         4 si el grafo es 4-conexo,
+ *         5 si el grafo es k-conexo (k >= 5),
+ *        -1 si ocurre un error.
  */
 int rastreo_de_k_coneccidad_hasta_4(int **grafo, int n_vertices){
+    // Se verifica la conexidad del grafo sin eliminar vertices
+    int ignorados[] = {-1}; // Se indica el fin de la lista con -1
+    int conexo = dfs_coneccidad(grafo, n_vertices, ignorados);
+    if(conexo == false) return 0;
+    else if(conexo == ERROR) return -1;
+
     // Se verifica la conexidad del grafo ignorando un vertice
     for (int i = 0; i < n_vertices; i++){
         int ignorados[] = {i, -1}; // Se indica el fin de la lista con -1
@@ -209,7 +223,7 @@ void busqueda_grados(int **grafo, int n_vertices){
  * @param grafo Lista de adyacencia del grafo
  * @param n_vertices Numero de vertices del grafo
  */
-void eleccion_opciones(int **grafo, int n_vertices){
+void eleccion_opciones(int ***grafo, int *n_vertices) {
     printf(MAGENTA "1. Verificar conexidad del grafo\n" RESET_COLOR);
     printf(MAGENTA "2. Verificar k-conexidad del grafo\n" RESET_COLOR);
     printf(MAGENTA "3. Verificar grados maximos y minimos del grafo\n" RESET_COLOR);
@@ -224,36 +238,34 @@ void eleccion_opciones(int **grafo, int n_vertices){
 
     printf("\n\n");
 
-    switch(opcion){
+    switch(opcion) {
         case 1:
             // Se verifica la conexidad del grafo sin eliminar vertices
             int ignorados[] = {-1}; // Se indica el fin de la lista con -1
             printf(BLANCO "NO SE IGNORAN VERTICES " AMARILLO "\"GRAFO ORIGINAL\"" BLANCO " :\t" RESET_COLOR);
-            impresion_resultado_dfs(dfs_coneccidad(grafo, n_vertices, ignorados));
-
+            impresion_resultado_dfs(dfs_coneccidad(*grafo, *n_vertices, ignorados));
             printf("\n\n");
             break;
         case 2:
-            impresion_resultado_dfs_k_conexo(rastreo_de_k_coneccidad_hasta_4(grafo, n_vertices));
+            impresion_resultado_dfs_k_conexo(rastreo_de_k_coneccidad_hasta_4(*grafo, *n_vertices));
             break;
         case 3:
-            busqueda_grados(grafo, n_vertices);
+            busqueda_grados(*grafo, *n_vertices);
             break;
         case 4:
-            impresion_grafo(grafo, n_vertices); // Se imprime la lista de adyacencia
+            impresion_grafo(*grafo, *n_vertices); // Se imprime la lista de adyacencia
             break;
         case 5:
-            liberacion_memoria_grafo(grafo, n_vertices); // Se libera la memoria de la lista de adyacencia
-            entrada_grafo(&grafo, &n_vertices); // Se obtiene la lista de adyacencia (hay que liberar memoria)
+            liberacion_memoria_grafo(grafo, *n_vertices); // Se libera la memoria de la lista de adyacencia
+            entrada_grafo(grafo, n_vertices); // Se obtiene la lista de adyacencia (hay que liberar memoria)
             break;
         case 6:
-            liberacion_memoria_grafo(grafo, n_vertices); // Se libera la memoria de la lista de adyacencia
+            liberacion_memoria_grafo(grafo, *n_vertices); // Se libera la memoria de la lista de adyacencia
             exit(EXIT_SUCCESS);
         default:
             printf(ROJO "Opcion invalida\n" RESET_COLOR);
             break;
     }
-
 }
 
 
@@ -263,7 +275,7 @@ int main(){
     entrada_grafo(&grafo, &n_vertices); // Se obtiene la lista de adyacencia (hay que liberar memoria)
 
     while(true) 
-        eleccion_opciones(grafo, n_vertices);
+        eleccion_opciones(&grafo, &n_vertices);
 
     return 0;
 }
