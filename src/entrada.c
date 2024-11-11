@@ -78,8 +78,11 @@ void entrada_grafo(int ***grafo, int *n_vertices) {
     // Asignar memoria para la matriz de adyacencia
     *grafo = (int**)malloc(sizeof(int*) * (*n_vertices));
     for (int i = 0; i < *n_vertices; i++) {
-        (*grafo)[i] = (int*)malloc(sizeof(int) * (*n_vertices+1));
+        (*grafo)[i] = (int*)malloc(sizeof(int) * 2);  // Asignar memoria inicial para 2 enteros
+        (*grafo)[i][0] = -1;  // Marcar el final de la fila
     }
+    int *tamano_filas = (int*)malloc(sizeof(int) * (*n_vertices));
+    for (int i = 0; i < *n_vertices; i++) tamano_filas[i] = 2;
 
     char buffer[BUFFER_SIZE];
     int vertice = -1;   // Vertice actual // -1 indica que no se ha leido un vertice
@@ -87,7 +90,7 @@ void entrada_grafo(int ***grafo, int *n_vertices) {
     fgets(buffer, sizeof(buffer), file);  // Ignorar la primera linea
     while (fgets(buffer, sizeof(buffer), file) != NULL) {
         char *numero = NULL;
-        int j = 0;
+        int indice_entrada = 0;
 
         do{
             numero = strtok(numero == NULL ? buffer : NULL, ",: ");
@@ -96,23 +99,28 @@ void entrada_grafo(int ***grafo, int *n_vertices) {
             // Eliminar caracteres no imprimibles del token
             eliminar_caracteres_no_imprimibles(numero);
 
-            /*
-            // Imprimir caracteres y sus valores ASCII
-            if (j == 0) printf(VERDE "Vertice:\n" RESET_COLOR);
-            else printf(AZUL "Vecino %d:\n" RESET_COLOR, j);
+            if (indice_entrada == 0) vertice = atoi(numero) - 1;  // Se resta 1 para que los vertices comiencen en 0
+            else {
+                // Redimensionar la fila si es necesario
+                if (indice_entrada >= tamano_filas[vertice]) {
+                    tamano_filas[vertice] *= 2;
+                    (*grafo)[vertice] = (int*)realloc((*grafo)[vertice], sizeof(int) * tamano_filas[vertice]);
+                    if ((*grafo)[vertice] == NULL) {
+                        perror(ROJO "Error al redimensionar la fila" RESET_COLOR);
+                        exit(EXIT_FAILURE);
+                    }
+                }
+                
+                (*grafo)[vertice][indice_entrada - 1] = atoi(numero) - 1;  // Se resta 1 para que los vertices comiencen en 0
+                (*grafo)[vertice][indice_entrada] = -1;  // Marcar el final de la fila
+            }
 
-            imprimir_caracteres(numero);
-            */
-
-            if (j == 0) vertice = atoi(numero) - 1;  // Se resta 1 para que los vertices comiencen en 0
-            else (*grafo)[vertice][j - 1] = atoi(numero) - 1;  // Se resta 1 para que los vertices comiencen en 0
-
-            j++;
+            indice_entrada++;
         } while (1);
 
-        if (vertice != -1) (*grafo)[vertice][j - 1] = -1; // Marcar el final de la fila
         vertice = -1;   // Reiniciar el vertice
     }
 
     fclose(file);
+    free(tamano_filas);
 }
