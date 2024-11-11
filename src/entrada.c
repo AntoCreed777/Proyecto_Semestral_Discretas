@@ -1,12 +1,42 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "constantes.h"
 #include "entrada.h"
 
 #define tamaño_ruta 256
 #define BUFFER_SIZE 1024
 
+/**
+ * @brief Imprime los caracteres de una cadena y sus valores ASCII
+ * 
+ * @param str Cadena a imprimir
+ */
+void imprimir_caracteres(const char *str) {
+    for (int i = 0; str[i] != '\0'; i++) {
+        printf("Caracter %d: '%c' (ASCII: %d)\n", i, str[i], (unsigned char)str[i]);
+    }
+    printf("\n");
+}
+
+/**
+ * @brief Elimina los caracteres no imprimibles y los espacios de una cadena
+ * 
+ * @param str Cadena a modificar
+ */
+void eliminar_caracteres_no_imprimibles(char* str) {
+    char* inicial = str;
+    char* final = str;
+
+    while (*inicial) {
+        if (isprint((unsigned char)*inicial) && !isspace((unsigned char)*inicial)) {
+            *final++ = *inicial;
+        }
+        inicial++;
+    }
+    *final = '\0';
+}
 
 /**
  * @brief Recibe la ruta de un archivo y lo abre
@@ -56,15 +86,29 @@ void entrada_grafo(int ***grafo, int *n_vertices) {
     
     fgets(buffer, sizeof(buffer), file);  // Ignorar la primera linea
     while (fgets(buffer, sizeof(buffer), file) != NULL) {
-        char *numero = strtok(buffer, ",: ");
+        char *numero = NULL;
         int j = 0;
-        while (numero != NULL) {
+
+        do{
+            numero = strtok(numero == NULL ? buffer : NULL, ",: ");
+            if (numero == NULL) break;
+
+            // Eliminar caracteres no imprimibles del token
+            eliminar_caracteres_no_imprimibles(numero);
+
+            /*
+            // Imprimir caracteres y sus valores ASCII
+            if (j == 0) printf(VERDE "Vertice:\n" RESET_COLOR);
+            else printf(AZUL "Vecino %d:\n" RESET_COLOR, j);
+
+            imprimir_caracteres(numero);
+            */
+
             if (j == 0) vertice = atoi(numero) - 1;  // Se resta 1 para que los vertices comiencen en 0
             else (*grafo)[vertice][j - 1] = atoi(numero) - 1;  // Se resta 1 para que los vertices comiencen en 0
-            
-            numero = strtok(NULL, ",: ");
+
             j++;
-        }
+        } while (1);
 
         if (vertice != -1) (*grafo)[vertice][j - 1] = -1; // Marcar el final de la fila
         vertice = -1;   // Reiniciar el vertice
