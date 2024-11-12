@@ -7,6 +7,8 @@
 #include "dfs.h"
 
 #define ERROR 2
+#define ERROR_CONEXIDAD -1
+#define ERROR_GRAFO_UNITARIO -2
 #define INF 1e9
 
 /**
@@ -45,8 +47,9 @@ void impresion_resultado_dfs(int conexo){
  */
 void impresion_resultado_dfs_k_conexo(int k_conexo){
     if(k_conexo == true) printf(VERDE "El grafo es %d-conexo\n" RESET_COLOR, k_conexo);
-    else if(k_conexo == false) printf(CIAN "El grafo es 0-conexo (El grafo original es disconexo)\n" RESET_COLOR);
-    else printf(ROJO "Error al verificar la k-conexidad del grafo\n" RESET_COLOR);
+    else if(k_conexo == false) printf(CIAN "El grafo original es disconexo\n" RESET_COLOR);
+    else if(k_conexo == ERROR_CONEXIDAD) printf(ROJO "Error al verificar la k-conexidad del grafo\n" RESET_COLOR);
+    else if(k_conexo == ERROR_GRAFO_UNITARIO) printf(AMARILLO "No existe 'k' tal que el grafo sea k-conexo\n" RESET_COLOR);
 
     printf("\n\n");
 }
@@ -137,32 +140,39 @@ void rastreo_de_coneccidad_4_salida_completa(int **grafo, int n_vertices){
  */
 int rastreo_de_k_coneccidad_hasta_4(int **grafo, int n_vertices){
     // Se verifica la conexidad del grafo sin eliminar vertices
+    if (n_vertices == 1) return ERROR_GRAFO_UNITARIO;
+
     int ignorados[] = {-1}; // Se indica el fin de la lista con -1
     int conexo = dfs_coneccidad(grafo, n_vertices, ignorados);
     if(conexo == false) return 0;
-    else if(conexo == ERROR) return -1;
+    else if(conexo == ERROR) return ERROR_CONEXIDAD;
 
     // Se verifica la conexidad del grafo ignorando un vertice
+    if (n_vertices == 2) return 1;
+
     for (int i = 0; i < n_vertices; i++){
         int ignorados[] = {i, -1}; // Se indica el fin de la lista con -1
         int conexo = dfs_coneccidad(grafo, n_vertices, ignorados);
         if(conexo == false) return 1;
-        else if(conexo == ERROR) return -1;
+        else if(conexo == ERROR) return ERROR_CONEXIDAD;
     }
 
     // Se verifica la conexidad del grafo ignorando dos vertices
+    if (n_vertices == 3) return 2;
     for (int i = 0; i < n_vertices; i++) {
         for (int j = 0; j < n_vertices; j++) {
             if (i != j) {
                 int ignorados[] = {i, j, -1}; // Se indica el fin de la lista con -1
                 int conexo = dfs_coneccidad(grafo, n_vertices, ignorados);
                 if(conexo == false) return 2;
-                else if(conexo == ERROR) return -1;
+                else if(conexo == ERROR) return ERROR_CONEXIDAD;
             }
         }
     }
 
     // Se verifica la conexidad del grafo ignorando tres vertices
+    if (n_vertices == 4) return 3;
+
     for (int i = 0; i < n_vertices; i++) {
         for (int j = 0; j < n_vertices; j++) {
             for (int k = 0; k < n_vertices; k++) {
@@ -170,13 +180,15 @@ int rastreo_de_k_coneccidad_hasta_4(int **grafo, int n_vertices){
                     int ignorados[] = {i, j, k, -1}; // Se indica el fin de la lista con -1
                     int conexo = dfs_coneccidad(grafo, n_vertices, ignorados);
                     if(conexo == false) return 3;
-                    else if(conexo == ERROR) return -1;
+                    else if(conexo == ERROR) return ERROR_CONEXIDAD;
                 }
             }
         }
     }
 
     // Se verifica la conexidad del grafo ignorando cuatro vertices
+    if (n_vertices == 5) return 4;
+
     for (int i = 0; i < n_vertices; i++) {
         for (int j = 0; j < n_vertices; j++) {
             for (int k = 0; k < n_vertices; k++) {
@@ -185,7 +197,7 @@ int rastreo_de_k_coneccidad_hasta_4(int **grafo, int n_vertices){
                         int ignorados[] = {i, j, k, l, -1}; // Se indica el fin de la lista con -1
                         int conexo = dfs_coneccidad(grafo, n_vertices, ignorados);
                         if(conexo == false) return 4;
-                        else if(conexo == ERROR) return -1;
+                        else if(conexo == ERROR) return ERROR_CONEXIDAD;
                     }
                 }
             }
