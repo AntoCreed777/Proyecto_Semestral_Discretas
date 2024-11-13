@@ -46,11 +46,11 @@ void impresion_resultado_dfs(int conexo){
  * @param k_conexo Variable que indica la k-conexidad del grafo
  */
 void impresion_resultado_dfs_k_conexo(int k_conexo){
-    if(k_conexo == true) printf(VERDE "El grafo es %d-conexo\n" RESET_COLOR, k_conexo);
-    else if(k_conexo == false) printf(CIAN "El grafo original es disconexo\n" RESET_COLOR);
-    else if(k_conexo == ERROR_CONEXIDAD) printf(ROJO "Error al verificar la k-conexidad del grafo\n" RESET_COLOR);
+    if(k_conexo == ERROR_CONEXIDAD) printf(ROJO "Error al verificar la k-conexidad del grafo\n" RESET_COLOR);
     else if(k_conexo == ERROR_GRAFO_UNITARIO) printf(AMARILLO "No existe 'k' tal que el grafo sea k-conexo\n" RESET_COLOR);
-
+    else if(k_conexo == 5) printf(AMARILLO "El grafo es k-conexo con k >= 5\n" RESET_COLOR);
+    else if (k_conexo == 0) printf(VERDE "El grafo es disconexo\n" RESET_COLOR);
+    else printf(VERDE "El grafo es %d-conexo\n" RESET_COLOR, k_conexo);
     printf("\n\n");
 }
 
