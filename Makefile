@@ -1,5 +1,5 @@
 # Nombre del ejecutable
-TARGET = main.out
+TARGET = main.exe
 
 # Compilador
 CC = gcc

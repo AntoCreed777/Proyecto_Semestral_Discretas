@@ -26,8 +26,8 @@ Para compilarlo y ejecutarlo simplemente ejecute ```make run``` después de clon
 Si make llegase a fallar se puede ejecutar el comando manualmente con:
 
 ```sh
-gcc -I ./include -o main.out ./src/dfs.c ./src/entrada.c ./src/main.c ./src/memoria.c ./src/pila.c
+gcc -I ./include -o main.exe ./src/dfs.c ./src/entrada.c ./src/main.c ./src/memoria.c ./src/pila.c
 ```
 
 
-Después de compilarlo simplemente ejecutar ```./main.out``` en el directorio del proyecto.
+Después de compilarlo simplemente ejecutar ```./main.exe``` en el directorio del proyecto.

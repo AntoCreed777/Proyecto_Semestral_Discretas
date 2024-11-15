@@ -253,8 +253,8 @@ void eleccion_opciones(int ***grafo, int *n_vertices) {
     switch(opcion) {
         case 1:
             // Se verifica la conexidad del grafo sin eliminar vertices
-            int ignorados[] = {-1}; // Se indica el fin de la lista con -1
             printf(BLANCO "NO SE IGNORAN VERTICES " AMARILLO "\"GRAFO ORIGINAL\"" BLANCO " :\t" RESET_COLOR);
+            int ignorados[] = {-1}; // Se indica el fin de la lista con -1
             impresion_resultado_dfs(dfs_coneccidad(*grafo, *n_vertices, ignorados));
             printf("\n\n");
             break;

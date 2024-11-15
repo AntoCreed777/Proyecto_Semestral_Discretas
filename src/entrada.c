@@ -5,7 +5,7 @@
 #include "constantes.h"
 #include "entrada.h"
 
-#define tamaño_ruta 256
+#define tamano_ruta 256
 #define BUFFER_SIZE 1024
 
 /**
@@ -45,7 +45,7 @@ void eliminar_caracteres_no_imprimibles(char* str) {
  * @note Sale del programa si el usuario ingresa "exit"
  */
 FILE *recibir_archivo() {
-    char ruta[tamaño_ruta];
+    char ruta[tamano_ruta];
     printf(AMARILLO "Ingrese la ruta del archivo (\"exit\" para salir del programa): " RESET_COLOR);
     scanf("%s", ruta);
 
